@@ -29,9 +29,9 @@ class AttrValidator::Validators::EmailValidator < AttrValidator::Validators::Val
   # Validates that value actually is email
   # @param value String object to validate
   # @return Boolean true if object is email, false otherwise
-  def self.validate(attr_name, value, validation)
+  def self.validate(attr_name, value, validation, errors)
     if validation.email
-      errors.add(attr_name, "should be email") unless !!EMAIL_ADDRESS.match(value)
+      errors.add(attr_name, "invalid email") unless !!EMAIL_ADDRESS.match(value)
     end
     errors
   end

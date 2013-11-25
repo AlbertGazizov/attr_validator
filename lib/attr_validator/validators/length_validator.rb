@@ -3,7 +3,7 @@ class AttrValidator::Validators::LengthValidator < AttrValidator::Validators::Va
   # Validates the given string
   # @param string String string to validate
   # @return Boolean true if string is valid, false otherwise
-  def self.validate(attr_name, string, validation)
+  def self.validate(attr_name, string, validation, errors)
     if validation.min
       errors.add(attr_name, "can't be less than #{validation.min}") if string.length < validation.min
     end

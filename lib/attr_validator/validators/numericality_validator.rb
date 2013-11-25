@@ -3,7 +3,7 @@ class AttrValidator::Validators::NumericalityValidator < AttrValidator::Validato
   # Validates that +number+ satisfies all validation defined in +validation+
   # @param number Integer number to validate
   # @return Boolean true if value is valid, false otherwise
-  def self.validate(attr_name, number, validation)
+  def self.validate(attr_name, number, validation, errors)
     if validation.greater_than
       errors.add(attr_name, "should be greater than #{validation.greater_than}") if value >= validaton.greater_than
     end

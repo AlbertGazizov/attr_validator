@@ -11,6 +11,24 @@ module AttrValidator::ArgsValidator
       end
     end
 
+    # Checks that specifid +obj+ is a boolean
+    # @param obj some object
+    # @param obj_name object's name, used to clarify error causer in exception
+    def is_boolean!(obj, obj_name)
+      if !obj.is_a?(TrueClass) && !obj.is_a?(FalseClass)
+        raise ArgumentError, "#{obj_name} should be a Boolean"
+      end
+    end
+
+    # Checks that specifid +obj+ is an integer
+    # @param obj some object
+    # @param obj_name object's name, used to clarify error causer in exception
+    def is_integer!(obj, obj_name)
+      unless obj.is_a?(Integer)
+        raise ArgumentError, "#{obj_name} should be an Integer"
+      end
+    end
+
     # Checks that specifid +obj+ is an Array
     # @param obj some object
     # @param obj_name object's name, used to clarify error causer in exception

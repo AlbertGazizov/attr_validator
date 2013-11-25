@@ -1,8 +1,8 @@
-class AttrValidator::Validations::ExclusionValidation
+class AttrValidator::ValidationRules::ExclusionValidationRule
   attr_accessor :in
 
-  def initialize(attrs)
-    self.in = attrs[:in]
+  def initialize(attrs = {})
+    self.in = attrs[:in] if attrs[:in]
   end
 
   def in=(list)
