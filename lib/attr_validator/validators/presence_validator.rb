@@ -6,7 +6,7 @@ class AttrValidator::Validators::PresenceValidator < AttrValidator::Validators::
   def self.validate(value, validation)
     errors = []
     if validation.presence
-      errors << "can't be blank" if value.nil? || value.strip.length == 0
+      errors << "can't be blank" if value.nil? || (value.is_a?(String) && value.strip.length == 0)
     end
     errors
   end
