@@ -41,7 +41,7 @@ module AttrValidator::Validator
   def validate!(entity)
     errors = validate(entity)
     unless errors.empty?
-      raise AttrValidator::Exceptions::ValidationError.new(errors)
+      raise AttrValidator::Exceptions::ValidationError.new("Validation Error", errors)
     end
   end
 
