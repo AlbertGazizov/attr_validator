@@ -5,5 +5,6 @@ module AttrValidator::ValidationRules
   require 'attr_validator/validation_rules/length_validation_rule'
   require 'attr_validator/validation_rules/presence_validation_rule'
   require 'attr_validator/validation_rules/length_validation_rule'
+  require 'attr_validator/validation_rules/numericality_validation_rule'
   require 'attr_validator/validation_rules/regexp_validation_rule'
 end

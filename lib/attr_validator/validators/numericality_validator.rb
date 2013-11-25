@@ -1,28 +1,33 @@
 class AttrValidator::Validators::NumericalityValidator < AttrValidator::Validators::Validator
 
-  # Validates that +number+ satisfies all validation defined in +validation+
+  # Validates that +number+ satisfies all validation_rule defined in +validation_rule+
   # @param number Integer number to validate
-  # @return Boolean true if value is valid, false otherwise
-  def self.validate(attr_name, number, validation, errors)
-    if validation.greater_than
-      errors.add(attr_name, "should be greater than #{validation.greater_than}") if value >= validaton.greater_than
+  # @return Boolean true if number is valid, false otherwise
+  def self.validate(number, validation_rule)
+    errors = []
+    if validation_rule.greater_than
+      errors << "should be greater than #{validation_rule.greater_than}" if number <= validation_rule.greater_than
     end
-    if validation.greater_than_or_equal_to
-      errors.add(attr_name, "should be greater than or equal to #{validation.greater_than_or_equal_to}") if value > validaton.greater_than_or_equal_to
+    if validation_rule.greater_than_or_equal_to
+      errors << "should be greater than or equal to #{validation_rule.greater_than_or_equal_to}" if number < validation_rule.greater_than_or_equal_to
     end
-    if validation.less_than
-      errors.add(attr_name, "should be less than #{validation.less_than}") if value <= validaton.less_than
+    if validation_rule.less_than
+      errors << "should be less than #{validation_rule.less_than}" if number >= validation_rule.less_than
     end
-    if validation.less_than_or_equal_to
-      errors.add(attr_name, "should be less than or equal to #{validation.less_than_or_equal_to}") if value < validaton.less_than_or_equal_to
+    if validation_rule.less_than_or_equal_to
+      errors << "should be less than or equal to #{validation_rule.less_than_or_equal_to}" if number > validation_rule.less_than_or_equal_to
     end
-    if validation.event
-      errors.add(attr_name, "should be even number") unless value.even?
+    if validation_rule.even
+      errors << "should be even number" unless number.even?
     end
-    if validation.odd
-      errors.add(attr_name, "should be odd number") unless value.odd?
+    if validation_rule.odd
+      errors << "should be odd number" unless number.odd?
     end
     errors
+  end
+
+  def self.validation_rule_class
+    AttrValidator::ValidationRules::NumericalityValidationRule
   end
 
 end

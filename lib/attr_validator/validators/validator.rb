@@ -3,9 +3,7 @@ class AttrValidator::Validators::Validator
     raise NotImplementedError, "Should be implemented in derived class"
   end
 
-  def self.validate!(attr_name, value, validation, errors)
-    if errors = validate(attr_name, value, validation, errors)
-      raise ValidationError.new(errors)
-    end
+  def self.validation_rule_class
+    raise NotImplementedError, "Should be implemented in derived class"
   end
 end

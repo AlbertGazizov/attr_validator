@@ -1,11 +1,12 @@
 class AttrValidator::ValidationRules::RegexpValidationRule
   attr_accessor :regexp
 
-  def initialize(attrs = {})
-    self.regexp = attrs[:regexp] if attrs[:regexp]
+  def initialize(regexp = nil)
+    self.regexp = regexp if regexp
   end
 
   def regexp=(regexp)
+    AttrValidator::ArgsValidator.not_nil!(regexp, :regexp)
     @regexp = Regexp.new(regexp)
   end
 

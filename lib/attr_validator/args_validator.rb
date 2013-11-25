@@ -56,6 +56,12 @@ module AttrValidator::ArgsValidator
       end
     end
 
+    def not_nil!(obj, obj_name)
+      if obj.nil?
+        raise ArgumentError, "#{obj_name} can't be nil"
+      end
+    end
+
     # Checks that specified +block+ is given
     # @param block some block
     def block_given!(block)

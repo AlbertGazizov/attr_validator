@@ -1,8 +1,8 @@
 class AttrValidator::ValidationRules::EmailValidationRule
   attr_accessor :email
 
-  def initialize(attrs = {})
-    self.email = attrs[:email]
+  def initialize(email_flag = false)
+    self.email = email_flag
   end
 
   def email=(flag)

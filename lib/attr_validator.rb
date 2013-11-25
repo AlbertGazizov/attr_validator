@@ -1,4 +1,5 @@
 require 'attr_validator/version'
+require 'attr_validator/exceptions'
 require 'attr_validator/args_validator'
 require 'attr_validator/validator'
 require 'attr_validator/validators'
