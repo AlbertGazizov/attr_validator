@@ -4,7 +4,7 @@ require 'attr_validator'
 describe AttrValidator::Validator do
   describe "#validate" do
     class Contact
-      attr_accessor :first_name, :last_name, :position, :age, :type, :email, :color, :status, :stage
+      attr_accessor :first_name, :last_name, :position, :age, :type, :email, :color, :status, :stage, :description
     end
 
     class ContactValidator
@@ -19,19 +19,28 @@ describe AttrValidator::Validator do
       validates :color,      regexp: /#\w{6}/
       validates :status,     inclusion: { in: [:new, :lead] }
       validates :stage,      exclusion: { in: [:wrong, :bad] }
+
+      validate :check_description
+
+      def check_description(entity, errors)
+        if entity.description.nil?
+          errors.add(:description, "can't be empty")
+        end
+      end
     end
 
     it "should return empty errors if object is valid" do
       contact = Contact.new
-      contact.first_name = "John"
-      contact.last_name  = "Smith"
-      contact.position   = "Team Lead"
-      contact.age        = 35
-      contact.type       = 2
-      contact.email      = "johh.smith@example.com"
-      contact.color      = "#DDD333"
-      contact.status     = :lead
-      contact.stage      = :good
+      contact.first_name  = "John"
+      contact.last_name   = "Smith"
+      contact.position    = "Team Lead"
+      contact.age         = 35
+      contact.type        = 2
+      contact.email       = "johh.smith@example.com"
+      contact.color       = "#DDD333"
+      contact.status      = :lead
+      contact.stage       = :good
+      contact.description = "good guy"
 
       errors = ContactValidator.new.validate(contact)
       errors.should be_empty
@@ -59,6 +68,7 @@ describe AttrValidator::Validator do
         color: ["doens't match defined format"],
         status: ["should be included in [:new, :lead]"],
         stage: ["shouldn't be included in [:wrong, :bad]"],
+        description: ["can't be empty"],
       }
     end
   end

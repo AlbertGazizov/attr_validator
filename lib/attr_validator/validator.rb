@@ -5,7 +5,7 @@ module AttrValidator::Validator
   extend ActiveSupport::Concern
 
   included do
-    class_attribute :validations
+    class_attribute :validations, :custom_validators
   end
 
   module ClassMethods
@@ -19,9 +19,15 @@ module AttrValidator::Validator
       end
     end
 
-    def validate(method_name = nil)
+    def validate(method_name = nil, &block)
+      self.custom_validators ||= []
       if block_given?
-        yeld
+        self.custom_validators << block
+      elsif method_name
+        AttrValidator::ArgsValidator.is_symbol!(method_name, "validate method name")
+        self.custom_validators << method_name
+      else
+        raise ArgumentError, "method name or block should be given for validate"
       end
     end
 
@@ -42,6 +48,13 @@ module AttrValidator::Validator
     self.validations.each do |attr_name, validators|
       error_messages = validate_attr(attr_name, entity, validators)
       errors.add_all(attr_name, error_messages) unless error_messages.empty?
+    end
+    self.custom_validators.each do |custom_validator|
+      if custom_validator.is_a?(Symbol)
+        self.send(custom_validator, entity, errors)
+      else
+        custom_validator.call(entity, errors)
+      end
     end
     errors
   end
