@@ -29,4 +29,5 @@ Or install it yourself as:
 
 # TODO
 1. Use I18n for messages
-2. Check arity for validate method and block
+2. Document methods
+3. Write doc in readme

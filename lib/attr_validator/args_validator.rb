@@ -1,5 +1,7 @@
 # Helper class for arguments validation
 module AttrValidator::ArgsValidator
+  class ArgError < StandardError; end
+
   class << self
 
     # Checks that specifid +obj+ is a symbol
@@ -7,7 +9,7 @@ module AttrValidator::ArgsValidator
     # @param obj_name object's name, used to clarify error causer in exception
     def is_symbol!(obj, obj_name)
       unless obj.is_a?(Symbol)
-        raise ArgumentError, "#{obj_name} should be a Symbol"
+        raise ArgError, "#{obj_name} should be a Symbol"
       end
     end
 
@@ -16,7 +18,7 @@ module AttrValidator::ArgsValidator
     # @param obj_name object's name, used to clarify error causer in exception
     def is_boolean!(obj, obj_name)
       if !obj.is_a?(TrueClass) && !obj.is_a?(FalseClass)
-        raise ArgumentError, "#{obj_name} should be a Boolean"
+        raise ArgError, "#{obj_name} should be a Boolean"
       end
     end
 
@@ -25,7 +27,7 @@ module AttrValidator::ArgsValidator
     # @param obj_name object's name, used to clarify error causer in exception
     def is_integer!(obj, obj_name)
       unless obj.is_a?(Integer)
-        raise ArgumentError, "#{obj_name} should be an Integer"
+        raise ArgError, "#{obj_name} should be an Integer"
       end
     end
 
@@ -34,7 +36,7 @@ module AttrValidator::ArgsValidator
     # @param obj_name object's name, used to clarify error causer in exception
     def is_array!(obj, obj_name)
       unless obj.is_a?(Array)
-        raise ArgumentError, "#{obj_name} should be an Array"
+        raise ArgError, "#{obj_name} should be an Array"
       end
     end
 
@@ -43,7 +45,16 @@ module AttrValidator::ArgsValidator
     # @param obj_name object's name, used to clarify error causer in exception
     def is_hash!(obj, obj_name)
       unless obj.is_a?(Hash)
-        raise ArgumentError, "#{obj_name} should be a Hash"
+        raise ArgError, "#{obj_name} should be a Hash"
+      end
+    end
+
+    # Checks that specifid +obj+ is a string or regexp
+    # @param obj some object
+    # @param obj_name object's name, used to clarify error causer in exception
+    def is_string_or_regexp!(obj, obj_name)
+      if !obj.is_a?(String) && !obj.is_a?(Regexp)
+        raise ArgError, "#{obj_name} should be a String or Regexp"
       end
     end
 
@@ -52,13 +63,20 @@ module AttrValidator::ArgsValidator
     # @param key hash's key
     def has_key!(hash, key)
       unless hash.has_key?(key)
-        raise ArgumentError, "#{hash} should has #{key} key"
+        raise ArgError, "#{hash} should has #{key} key"
       end
     end
 
     def not_nil!(obj, obj_name)
       if obj.nil?
-        raise ArgumentError, "#{obj_name} can't be nil"
+        raise ArgError, "#{obj_name} can't be nil"
+      end
+    end
+
+    def is_empty!(obj, obj_name, message = nil)
+      unless obj.empty?
+        message ||= "#{obj_name} should be empty"
+        raise ArgError, message
       end
     end
 
@@ -66,7 +84,7 @@ module AttrValidator::ArgsValidator
     # @param block some block
     def block_given!(block)
       unless block
-        raise ArgumentError, "Block should be given"
+        raise ArgError, "Block should be given"
       end
     end
   end

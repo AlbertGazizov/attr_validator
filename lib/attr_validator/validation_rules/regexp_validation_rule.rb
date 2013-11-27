@@ -1,8 +1,9 @@
 class AttrValidator::ValidationRules::RegexpValidationRule
   attr_accessor :regexp
 
-  def initialize(regexp = nil)
-    self.regexp = regexp if regexp
+  def initialize(regexp)
+    AttrValidator::ArgsValidator.is_string_or_regexp!(regexp, :validation_rule)
+    self.regexp = regexp
   end
 
   def regexp=(regexp)

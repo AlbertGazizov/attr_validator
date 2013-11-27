@@ -1,7 +1,8 @@
 class AttrValidator::ValidationRules::EmailValidationRule
   attr_accessor :email
 
-  def initialize(email_flag = false)
+  def initialize(email_flag)
+    AttrValidator::ArgsValidator.is_boolean!(email_flag, :validation_rule)
     self.email = email_flag
   end
 
