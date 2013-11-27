@@ -73,10 +73,10 @@ module AttrValidator::ArgsValidator
       end
     end
 
-    def is_empty!(obj, obj_name, message = nil)
-      unless obj.empty?
-        message ||= "#{obj_name} should be empty"
-        raise ArgError, message
+    def has_only_allowed_keys!(hash, keys, obj_name)
+      remaining_keys = hash.keys - keys
+      unless remaining_keys.empty?
+        raise ArgError, "#{obj_name} has unacceptable options #{remaining_keys}"
       end
     end
 

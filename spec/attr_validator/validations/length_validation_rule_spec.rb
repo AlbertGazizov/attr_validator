@@ -7,7 +7,7 @@ describe AttrValidator::ValidationRules::LengthValidationRule do
     it "should raise error if validation attributes are invalid" do
       lambda do
         AttrValidator::ValidationRules::LengthValidationRule.new(max: 5, wrong_attr: 3)
-      end.should raise_error("validation rule has invalid options: {:wrong_attr=>3}")
+      end.should raise_error("validation_rule has unacceptable options [:wrong_attr]")
     end
   end
 

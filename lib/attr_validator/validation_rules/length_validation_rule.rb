@@ -3,11 +3,12 @@ class AttrValidator::ValidationRules::LengthValidationRule
 
   def initialize(attrs)
     AttrValidator::ArgsValidator.is_hash!(attrs, :validation_rule)
-    self.min          = attrs.delete(:min) if attrs[:min]
-    self.max          = attrs.delete(:max) if attrs[:max]
-    self.equal_to     = attrs.delete(:equal_to) if attrs[:equal_to]
-    self.not_equal_to = attrs.delete(:not_equal_to) if attrs[:not_equal_to]
-    AttrValidator::ArgsValidator.is_empty!(attrs, :validation_rule, "validation rule has invalid options: #{attrs}")
+    AttrValidator::ArgsValidator.has_only_allowed_keys!(attrs, [:min, :max, :equal_to, :not_equal_to], :validation_rule)
+
+    self.min          = attrs[:min]          if attrs[:min]
+    self.max          = attrs[:max]          if attrs[:max]
+    self.equal_to     = attrs[:equal_to]     if attrs[:equal_to]
+    self.not_equal_to = attrs[:not_equal_to] if attrs[:not_equal_to]
   end
 
   def min=(number)

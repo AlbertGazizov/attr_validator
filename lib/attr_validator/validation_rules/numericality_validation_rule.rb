@@ -3,13 +3,16 @@ class AttrValidator::ValidationRules::NumericalityValidationRule
 
   def initialize(attrs)
     AttrValidator::ArgsValidator.is_hash!(attrs, :validation_rule)
-    self.greater_than             = attrs.delete(:greater_than) if attrs[:greater_than]
-    self.greater_than_or_equal_to = attrs.delete(:greater_than_or_equal_to) if attrs[:greater_than_or_equal_to]
-    self.less_than                = attrs.delete(:less_than) if attrs[:less_than]
-    self.less_than_or_equal_to    = attrs.delete(:less_than_or_equal_to) if attrs[:less_than_or_equal_to]
-    self.even                     = attrs.delete(:even) if attrs[:even]
-    self.odd                      = attrs.delete(:odd) if attrs[:odd]
-    AttrValidator::ArgsValidator.is_empty!(attrs, :validation_rule, "validation rule has invalid options: #{attrs}")
+    AttrValidator::ArgsValidator.has_only_allowed_keys!(attrs, [
+      :greater_than, :greater_than_or_equal_to, :less_than, :less_than_or_equal_to, :even, :odd
+    ], :validation_rule)
+
+    self.greater_than             = attrs[:greater_than]             if attrs[:greater_than]
+    self.greater_than_or_equal_to = attrs[:greater_than_or_equal_to] if attrs[:greater_than_or_equal_to]
+    self.less_than                = attrs[:less_than]                if attrs[:less_than]
+    self.less_than_or_equal_to    = attrs[:less_than_or_equal_to]    if attrs[:less_than_or_equal_to]
+    self.even                     = attrs[:even]                     if attrs[:even]
+    self.odd                      = attrs[:odd]                      if attrs[:odd]
   end
 
   def greater_than=(number)

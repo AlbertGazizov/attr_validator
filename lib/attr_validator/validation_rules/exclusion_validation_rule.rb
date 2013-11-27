@@ -3,8 +3,9 @@ class AttrValidator::ValidationRules::ExclusionValidationRule
 
   def initialize(attrs)
     AttrValidator::ArgsValidator.is_hash!(attrs, :validation_rule)
-    self.in = attrs.delete(:in) if attrs[:in]
-    AttrValidator::ArgsValidator.is_empty!(attrs, :validation_rule, "validation rule has invalid options: #{attrs}")
+    AttrValidator::ArgsValidator.has_only_allowed_keys!(attrs, [:in], :validation_rule)
+
+    self.in = attrs[:in] if attrs[:in]
   end
 
   def in=(list)

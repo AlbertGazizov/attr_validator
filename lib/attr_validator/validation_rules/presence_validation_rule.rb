@@ -3,6 +3,7 @@ class AttrValidator::ValidationRules::PresenceValidationRule
 
   def initialize(presence_flag)
     AttrValidator::ArgsValidator.is_boolean!(presence_flag, :validation_rule)
+
     self.presence = presence_flag
   end
 

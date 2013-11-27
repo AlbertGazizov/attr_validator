@@ -3,6 +3,7 @@ class AttrValidator::ValidationRules::RegexpValidationRule
 
   def initialize(regexp)
     AttrValidator::ArgsValidator.is_string_or_regexp!(regexp, :validation_rule)
+
     self.regexp = regexp
   end
 

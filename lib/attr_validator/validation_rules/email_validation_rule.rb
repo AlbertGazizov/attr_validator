@@ -3,6 +3,7 @@ class AttrValidator::ValidationRules::EmailValidationRule
 
   def initialize(email_flag)
     AttrValidator::ArgsValidator.is_boolean!(email_flag, :validation_rule)
+
     self.email = email_flag
   end
 
