@@ -45,6 +45,9 @@ module AttrValidator::Validator
 
   def validate(entity)
     errors = AttrValidator::Errors.new
+    self.validations ||= {}
+    self.custom_validators ||= []
+
     self.validations.each do |attr_name, validators|
       error_messages = validate_attr(attr_name, entity, validators)
       errors.add_all(attr_name, error_messages) unless error_messages.empty?
