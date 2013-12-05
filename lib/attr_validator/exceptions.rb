@@ -9,7 +9,7 @@ module AttrValidator::Exceptions
     end
 
     def message
-      "#{message}\n#{errors.to_hash}"
+      "#{@message}\n#{errors.to_hash}"
     end
 
     def short_message
