@@ -7,6 +7,14 @@ module AttrValidator::Exceptions
       @errors = errors
       super(message)
     end
+
+    def message
+      "#{message}\n#{errors.to_hash}"
+    end
+
+    def short_message
+      'Validation error'
+    end
   end
 
 

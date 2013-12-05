@@ -55,7 +55,7 @@ module AttrValidator::Validator
     self.custom_validators.each do |custom_validator|
       if custom_validator.is_a?(Symbol)
         self.send(custom_validator, entity, errors)
-      else
+      else # it's Proc
         custom_validator.call(entity, errors)
       end
     end
