@@ -58,6 +58,24 @@ module AttrValidator::ArgsValidator
       end
     end
 
+    # Checks that specifid +obj+ is a symbol or class
+    # @param obj some object
+    # @param obj_name object's name, used to clarify error causer in exception
+    def is_class_or_symbol!(obj, obj_name)
+      if !obj.is_a?(Symbol) && !obj.is_a?(Class)
+        raise ArgError, "#{obj_name} should be a Symbol or Class"
+      end
+    end
+
+    # Checks that specifid +obj+ is a symbol or block
+    # @param obj some object
+    # @param obj_name object's name, used to clarify error causer in exception
+    def is_symbol_or_block!(obj, obj_name)
+      if !obj.is_a?(Symbol) && !obj.is_a?(Proc)
+        raise ArgError, "#{obj_name} should be a Symbol or Proc"
+      end
+    end
+
     # Checks that specifid +hash+ has a specified +key+
     # @param hash some hash
     # @param key hash's key

@@ -5,7 +5,7 @@ module AttrValidator::Validator
   extend ActiveSupport::Concern
 
   included do
-    class_attribute :validations, :custom_validators
+    class_attribute :validations, :associated_validations, :custom_validations
   end
 
   module ClassMethods
@@ -19,13 +19,23 @@ module AttrValidator::Validator
       end
     end
 
+    def validate_associated(association_name, options)
+      AttrValidator::ArgsValidator.not_nil!(options[:validator], :validator)
+      AttrValidator::ArgsValidator.is_class_or_symbol!(options[:validator], :validator)
+      AttrValidator::ArgsValidator.is_symbol_or_block!(options[:if], :if) if options[:if]
+      AttrValidator::ArgsValidator.is_symbol_or_block!(options[:unless], :unless) if options[:unless]
+
+      self.associated_validations ||= {}
+      self.associated_validations[association_name] = options
+    end
+
     def validate(method_name = nil, &block)
-      self.custom_validators ||= []
+      self.custom_validations ||= []
       if block_given?
-        self.custom_validators << block
+        self.custom_validations << block
       elsif method_name
         AttrValidator::ArgsValidator.is_symbol!(method_name, "validate method name")
-        self.custom_validators << method_name
+        self.custom_validations << method_name
       else
         raise ArgumentError, "method name or block should be given for validate"
       end
@@ -46,17 +56,28 @@ module AttrValidator::Validator
   def validate(entity)
     errors = AttrValidator::Errors.new
     self.validations ||= {}
-    self.custom_validators ||= []
+    self.custom_validations ||= []
+    self.associated_validations ||= {}
 
     self.validations.each do |attr_name, validators|
       error_messages = validate_attr(attr_name, entity, validators)
       errors.add_all(attr_name, error_messages) unless error_messages.empty?
     end
-    self.custom_validators.each do |custom_validator|
-      if custom_validator.is_a?(Symbol)
-        self.send(custom_validator, entity, errors)
+    self.associated_validations.each do |association_name, options|
+      next if skip_validation?(options)
+      validator = options[:validator].is_a?(Class) ? options[:validator].new : entity.send(options[:validator])
+      children = entity.send(association_name)
+      if children.is_a?(Array)
+        validate_children(association_name, validator, children, errors)
+      elsif children
+        validate_child(association_name, validator, children, errors)
+      end
+    end
+    self.custom_validations.each do |custom_validation|
+      if custom_validation.is_a?(Symbol)
+        self.send(custom_validation, entity, errors)
       else # it's Proc
-        custom_validator.call(entity, errors)
+        custom_validation.call(entity, errors)
       end
     end
     errors
@@ -79,6 +100,44 @@ module AttrValidator::Validator
       break unless error_messages.empty?
     end
     error_messages
+  end
+
+  def skip_validation?(options)
+    if options[:if]
+      if options[:if].is_a?(Symbol)
+        true unless self.send(options[:if])
+      elsif options[:if].is_a?(Proc)
+        true unless self.instance_exec(&options[:if])
+      else
+        false
+      end
+    elsif options[:unless]
+      if options[:unless].is_a?(Symbol)
+        true if self.send(options[:unless])
+      elsif options[:unless].is_a?(Proc)
+        true if self.instance_exec(&options[:unless])
+      else
+        false
+      end
+    end
+  end
+
+  def validate_children(association_name, validator, children, errors)
+    children_errors = []
+    children.each do |child|
+      children_errors << validator.validate(child).to_hash
+    end
+    unless children_errors.all?(&:empty?)
+      errors.messages["#{association_name}_errors".to_sym] ||= []
+      errors.messages["#{association_name}_errors".to_sym] += children_errors
+    end
+  end
+
+  def validate_child(association_name, validator, child, errors)
+    child_errors = validator.validate(child).to_hash
+    unless child_errors.empty?
+      errors.messages["#{association_name}_errors".to_sym] = child_errors
+    end
   end
 
 end

@@ -4,7 +4,16 @@ require 'attr_validator'
 describe AttrValidator::Validator do
   describe "#validate" do
     class Contact
-      attr_accessor :first_name, :last_name, :position, :age, :type, :email, :color, :status, :stage, :description
+      attr_accessor :first_name, :last_name, :position, :age, :type, :email, :color, :status, :stage, :description, :companies
+    end
+    class Company
+      attr_accessor :name
+    end
+
+    class CompanyValidator
+      include AttrValidator::Validator
+
+      validates :name, presence: true, length: { min: 3, max: 9 }
     end
 
     class ContactValidator
@@ -19,6 +28,8 @@ describe AttrValidator::Validator do
       validates :color,      regexp: /#\w{6}/
       validates :status,     inclusion: { in: [:new, :lead] }
       validates :stage,      exclusion: { in: [:wrong, :bad] }
+
+      validate_associated :companies, validator: CompanyValidator
 
       validate :check_description
 
@@ -42,6 +53,13 @@ describe AttrValidator::Validator do
       contact.stage       = :good
       contact.description = "good guy"
 
+      company1 = Company.new
+      company1.name = 'DroidLabs'
+      company2 = Company.new
+      company2.name = 'ICL'
+
+      contact.companies = [company1, company2]
+
       errors = ContactValidator.new.validate(contact)
       errors.should be_empty
     end
@@ -58,6 +76,13 @@ describe AttrValidator::Validator do
       contact.status     = :left
       contact.stage      = :bad
 
+      company1 = Company.new
+      company1.name = 'DroidLabs Wrong'
+      company2 = Company.new
+      company2.name = 'IC'
+
+      contact.companies = [company1, company2]
+
       errors = ContactValidator.new.validate(contact)
       errors.to_hash.should == {
         first_name: ["can't be blank"],
@@ -69,6 +94,10 @@ describe AttrValidator::Validator do
         status: ["should be included in [:new, :lead]"],
         stage: ["shouldn't be included in [:wrong, :bad]"],
         description: ["can't be empty"],
+        companies_errors: [
+          { name: ["can't be more than 9"] },
+          { name: ["can't be less than 3"] },
+        ]
       }
     end
   end
