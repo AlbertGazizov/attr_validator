@@ -65,7 +65,7 @@ module AttrValidator::Validator
     end
     self.associated_validations.each do |association_name, options|
       next if skip_validation?(options)
-      validator = options[:validator].is_a?(Class) ? options[:validator].new : entity.send(options[:validator])
+      validator = options[:validator].is_a?(Class) ? options[:validator].new : self.send(options[:validator])
       children = entity.send(association_name)
       if children.is_a?(Array)
         validate_children(association_name, validator, children, errors)
