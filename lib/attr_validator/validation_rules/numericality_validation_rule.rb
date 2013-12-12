@@ -16,22 +16,22 @@ class AttrValidator::ValidationRules::NumericalityValidationRule
   end
 
   def greater_than=(number)
-    AttrValidator::ArgsValidator.is_integer!(number, :greater_than)
+    AttrValidator::ArgsValidator.is_integer_or_float!(number, :greater_than)
     @greater_than = number
   end
 
   def greater_than_or_equal_to=(number)
-    AttrValidator::ArgsValidator.is_integer!(number, :greater_than_or_equal_to)
+    AttrValidator::ArgsValidator.is_integer_or_float!(number, :greater_than_or_equal_to)
     @greater_than_or_equal_to = number
   end
 
   def less_than=(number)
-    AttrValidator::ArgsValidator.is_integer!(number, :less_than)
+    AttrValidator::ArgsValidator.is_integer_or_float!(number, :less_than)
     @less_than = number
   end
 
   def less_than_or_equal_to=(number)
-    AttrValidator::ArgsValidator.is_integer!(number, :less_than_or_equal_to)
+    AttrValidator::ArgsValidator.is_integer_or_float!(number, :less_than_or_equal_to)
     @less_than_or_equal_to = number
   end
 

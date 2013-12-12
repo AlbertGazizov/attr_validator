@@ -123,9 +123,14 @@ module AttrValidator::Validator
   end
 
   def validate_children(association_name, validator, children, errors)
-    children_errors = []
-    children.each do |child|
-      children_errors << validator.validate(child).to_hash
+    if validator.respond_to?(:validate_all)
+      children_errors = validator.validate_all(children)
+    elsif validator.respond_to?(:validate)
+      children_errors = children.inject([]) do |errors, child|
+        errors << validator.validate(child).to_hash
+      end
+    else
+      raise NotImplementedError, "Validator should respond at least to :validate or :validate_all"
     end
     unless children_errors.all?(&:empty?)
       errors.messages["#{association_name}_errors".to_sym] ||= []

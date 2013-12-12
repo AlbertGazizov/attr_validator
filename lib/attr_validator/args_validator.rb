@@ -49,6 +49,15 @@ module AttrValidator::ArgsValidator
       end
     end
 
+    # Checks that specifid +obj+ is an integer or float
+    # @param obj some object
+    # @param obj_name object's name, used to clarify error causer in exception
+    def is_integer_or_float!(obj, obj_name)
+      if !obj.is_a?(Integer) && !obj.is_a?(Float)
+        raise ArgError, "#{obj_name} should be an Integer or Float"
+      end
+    end
+
     # Checks that specifid +obj+ is a string or regexp
     # @param obj some object
     # @param obj_name object's name, used to clarify error causer in exception
