@@ -4,6 +4,8 @@ class AttrValidator::Validators::ExclusionValidator < AttrValidator::Validators:
   # @param value Object object to validate exclusion
   # @return Boolean true if object is excluded, false otherwise
   def self.validate(value, validation)
+    return [] if valid.nil?
+
     errors = []
     if validation.in
       errors << "shouldn't be included in #{validation.in}" if validation.in.include?(value)

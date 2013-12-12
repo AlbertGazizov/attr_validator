@@ -4,6 +4,8 @@ class AttrValidator::Validators::NumericalityValidator < AttrValidator::Validato
   # @param number Integer number to validate
   # @return Boolean true if number is valid, false otherwise
   def self.validate(number, validation_rule)
+    return [] if valid.nil?
+
     errors = []
     if validation_rule.greater_than
       errors << "should be greater than #{validation_rule.greater_than}" if number <= validation_rule.greater_than
