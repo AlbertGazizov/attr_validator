@@ -4,7 +4,7 @@ class AttrValidator::Validators::RegexpValidator < AttrValidator::Validators::Va
   # @param value String value to match with regexp
   # @return Boolean true if value is valid, false otherwise
   def self.validate(value, validation)
-    return [] if valid.nil?
+    return [] if value.nil?
 
     errors = []
     if validation.regexp

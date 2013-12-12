@@ -6,7 +6,7 @@ class AttrValidator::Validators::UrlValidator < AttrValidator::Validators::Valid
   # @param value String object to validate
   # @return Boolean true if object is url, false otherwise
   def self.validate(value, validation)
-    return [] if valid.nil?
+    return [] if value.nil?
 
     errors = []
     if validation.url

@@ -4,7 +4,7 @@ class AttrValidator::Validators::InclusionValidator < AttrValidator::Validators:
   # @param value Object object to validate inclusion
   # @return Boolean true if object is included, false otherwise
   def self.validate(value, validation)
-    return [] if valid.nil?
+    return [] if value.nil?
 
     errors = []
     if validation.in

@@ -30,7 +30,7 @@ class AttrValidator::Validators::EmailValidator < AttrValidator::Validators::Val
   # @param value String object to validate
   # @return Boolean true if object is email, false otherwise
   def self.validate(value, validation)
-    return [] if valid.nil?
+    return [] if value.nil?
 
     errors = []
     if validation.email
