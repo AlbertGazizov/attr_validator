@@ -15,6 +15,6 @@ module AttrValidator::Validators
     validator_class_name = "#{validator_name.to_s.classify}Validator"
     AttrValidator::Validators.const_get(validator_class_name)
   rescue NameError => e
-    raise AttrValidator::Exceptions::MissingValidatorError, "Validator AttrValidator::Validators::#{validator_class_name} doesn't exist"
+    raise AttrValidator::Errors::MissingValidatorError, "Validator AttrValidator::Validators::#{validator_class_name} doesn't exist"
   end
 end

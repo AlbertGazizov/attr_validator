@@ -54,7 +54,7 @@ module AttrValidator::Validator
   end
 
   def validate(entity)
-    errors = AttrValidator::Errors.new
+    errors = AttrValidator::ValidationErrors.new
     self.validations ||= {}
     self.custom_validations ||= []
     self.associated_validations ||= {}
@@ -86,7 +86,7 @@ module AttrValidator::Validator
   def validate!(entity)
     errors = validate(entity)
     unless errors.empty?
-      raise AttrValidator::Exceptions::ValidationError.new("Validation Error", errors)
+      raise AttrValidator::Errors::ValidationError.new("Validation Error", errors)
     end
   end
 
