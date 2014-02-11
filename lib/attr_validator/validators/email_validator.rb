@@ -1,5 +1,4 @@
-class AttrValidator::Validators::EmailValidator < AttrValidator::Validators::Validator
-
+class AttrValidator::Validators::EmailValidator
   # This rule was adapted from https://github.com/emmanuel/aequitas/blob/master/lib/aequitas/rule/format/email_address.rb
   EMAIL_ADDRESS = begin
     letter         = 'a-zA-Z'
@@ -27,20 +26,23 @@ class AttrValidator::Validators::EmailValidator < AttrValidator::Validators::Val
   end
 
   # Validates that value actually is email
-  # @param value String object to validate
-  # @return Boolean true if object is email, false otherwise
-  def self.validate(value, validation)
+  # @param value   [String] object to validate
+  # @param email_flag [Boolean] should be given string be email or not
+  # @return [Array] empty array if string is valid, array with error message otherwise
+  def self.validate(value, email_flag)
     return [] if value.nil?
 
     errors = []
-    if validation.email
-      errors << "invalid email" unless !!EMAIL_ADDRESS.match(value)
+    if email_flag
+      errors << AttrValidator::I18n.t("invalid email") unless !!EMAIL_ADDRESS.match(value)
+    else
+      errors << AttrValidator::I18n.t("can't be email") if !!EMAIL_ADDRESS.match(value)
     end
     errors
   end
 
-  def self.validation_rule_class
-    AttrValidator::ValidationRules::EmailValidationRule
+  def self.validate_options(email_flag)
+    AttrValidator::ArgsValidator.is_boolean!(email_flag, :validation_rule)
   end
 
 end

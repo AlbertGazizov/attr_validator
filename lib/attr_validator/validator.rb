@@ -45,10 +45,13 @@ module AttrValidator::Validator
 
     def add_validations(attr_name, options)
       self.validations[attr_name] ||= {}
-      options.each do |validator_name, validation_rule_attrs|
-        validator = AttrValidator::Validators.find_by_name!(validator_name)
-        validation_rule = validator.validation_rule_class.new(validation_rule_attrs)
-        self.validations[attr_name][validator] = validation_rule
+      options.each do |validator_name, validation_options|
+        validator = AttrValidator.validators[validator_name]
+        unless validator
+          raise AttrValidator::Errors::MissingValidatorError, "Validator with name '#{validator_name}' doesn't exist"
+        end
+        validator.validate_options(validation_options)
+        self.validations[attr_name][validator] = validation_options
       end
     end
   end

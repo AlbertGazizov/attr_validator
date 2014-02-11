@@ -1,20 +1,23 @@
-class AttrValidator::Validators::InclusionValidator < AttrValidator::Validators::Validator
+class AttrValidator::Validators::InclusionValidator
 
   # Validates that value inscludes in specified validation.inclusion
   # @param value Object object to validate inclusion
   # @return Boolean true if object is included, false otherwise
-  def self.validate(value, validation)
+  def self.validate(value, options)
     return [] if value.nil?
 
     errors = []
-    if validation.in
-      errors << "should be included in #{validation.in}" unless validation.in.include?(value)
+    if options[:in]
+      unless options[:in].include?(value)
+        errors << (options[:message] || AttrValidator::I18n.t("should be included in #{options[:in]}"))
+      end
     end
     errors
   end
 
-  def self.validation_rule_class
-    AttrValidator::ValidationRules::InclusionValidationRule
+  def self.validate_options(options)
+    AttrValidator::ArgsValidator.is_hash!(options, :validation_rule)
+    AttrValidator::ArgsValidator.has_only_allowed_keys!(options, [:in, :message], :validation_rule)
   end
 
 end

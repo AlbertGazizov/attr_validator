@@ -1,22 +1,25 @@
-class AttrValidator::Validators::UrlValidator < AttrValidator::Validators::Validator
-
+class AttrValidator::Validators::UrlValidator
   URL_REGEXP = /^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/
 
-  # Validates that value actually is valid url
-  # @param value String object to validate
-  # @return Boolean true if object is url, false otherwise
-  def self.validate(value, validation)
+  # Validates that string is a valid url
+  # @param value [String] string to validate
+  # @param url [Boolean] should given string be url or not
+  # @return [Array] empty array if number is valid, array of error messages otherwise
+  def self.validate(value, url_flag)
     return [] if value.nil?
 
     errors = []
-    if validation.url
-      errors << "invalid url" unless !!URL_REGEXP.match(value)
+    if url_flag
+      errors << AttrValidator::I18n.t("invalid url") unless !!URL_REGEXP.match(value)
+    else
+      errors << AttrValidator::I18n.t("can't be a url") if !!URL_REGEXP.match(value)
     end
+
     errors
   end
 
-  def self.validation_rule_class
-    AttrValidator::ValidationRules::UrlValidationRule
+  def self.validate_options(url_flag)
+    AttrValidator::ArgsValidator.is_boolean!(url_flag, :validation_rule)
   end
 
 end

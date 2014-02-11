@@ -1,20 +1,21 @@
-class AttrValidator::Validators::RegexpValidator < AttrValidator::Validators::Validator
+class AttrValidator::Validators::RegexpValidator
 
   # Validates that given value match regexp if regexp validation exists
   # @param value String value to match with regexp
-  # @return Boolean true if value is valid, false otherwise
-  def self.validate(value, validation)
+  # @param regexp [Regexp] regexp to match
+  # @return [Array] empty array if number is valid, array of error messages otherwise
+  def self.validate(value, regexp)
     return [] if value.nil?
 
     errors = []
-    if validation.regexp
-      errors << "doens't match defined format" unless !!validation.regexp.match(value)
+    unless !!regexp.match(value)
+      errors << AttrValidator::I18n.t("doens't match defined format")
     end
     errors
   end
 
-  def self.validation_rule_class
-    AttrValidator::ValidationRules::RegexpValidationRule
+  def self.validate_options(regexp)
+    AttrValidator::ArgsValidator.is_string_or_regexp!(regexp, :validation_rule)
   end
 
 end

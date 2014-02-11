@@ -1,18 +1,26 @@
-class AttrValidator::Validators::PresenceValidator < AttrValidator::Validators::Validator
+class AttrValidator::Validators::PresenceValidator
 
-  # Validates that given string present if presence validation is enabled
-  # @param value Object value to validate
-  # @return Boolean true if value is valid, false otherwise
-  def self.validate(value, validation)
+  # Validates that given object not nil and not empty
+  # if string is given strips it before validating
+  # @param value   [Object] object to validate
+  # @param presence [Boolean] check presence or not
+  # @return [Array] empty array if number is valid, array of error messages otherwise
+  def self.validate(value, presence)
     errors = []
-    if validation.presence
-      errors << "can't be blank" if value.nil? || (value.is_a?(String) && value.strip.length == 0)
+    if presence
+      if value.nil? || (value.is_a?(String) && value.strip.length == 0)
+        errors << AttrValidator::I18n.t("can't be blank")
+      end
+    else
+      if value
+        errors << AttrValidator::I18n.t("can't be not blank")
+      end
     end
     errors
   end
 
-  def self.validation_rule_class
-    AttrValidator::ValidationRules::PresenceValidationRule
+  def self.validate_options(presence_flag)
+    AttrValidator::ArgsValidator.is_boolean!(presence_flag, :validation_rule)
   end
 
 end
