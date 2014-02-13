@@ -28,5 +28,7 @@ AttrValidator.add_validator(:inclusion,    AttrValidator::Validators::InclusionV
 AttrValidator.add_validator(:length,       AttrValidator::Validators::LengthValidator)
 AttrValidator.add_validator(:numericality, AttrValidator::Validators::NumericalityValidator)
 AttrValidator.add_validator(:presence,     AttrValidator::Validators::PresenceValidator)
+AttrValidator.add_validator(:not_blank,    AttrValidator::Validators::PresenceValidator)
+AttrValidator.add_validator(:not_nil,      AttrValidator::Validators::NotNilValidator)
 AttrValidator.add_validator(:regexp,       AttrValidator::Validators::RegexpValidator)
 AttrValidator.add_validator(:url,          AttrValidator::Validators::UrlValidator)

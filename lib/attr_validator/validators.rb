@@ -8,5 +8,6 @@ module AttrValidator::Validators
   require 'attr_validator/validators/length_validator'
   require 'attr_validator/validators/numericality_validator'
   require 'attr_validator/validators/presence_validator'
+  require 'attr_validator/validators/not_nil_validator'
   require 'attr_validator/validators/regexp_validator'
 end
