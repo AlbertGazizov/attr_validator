@@ -1,8 +1,5 @@
-require 'active_support/concern.rb'
-require 'active_support/core_ext/class/attribute.rb'
-
 module AttrValidator::Validator
-  extend ActiveSupport::Concern
+  extend AttrValidator::Concern
 
   included do
     class_attribute :validations, :associated_validations, :custom_validations
