@@ -9,16 +9,16 @@ class AttrValidator::Validators::LengthValidator
 
     errors = []
     if options[:min]
-      errors << AttrValidator::I18n.t("can't be less than #{options[:min]}") if object.length < options[:min]
+      errors << AttrValidator::I18n.t('errors.can_not_be_less_than', length: options[:min]) if object.length < options[:min]
     end
     if options[:max]
-      errors << AttrValidator::I18n.t("can't be more than #{options[:max]}") if object.length > options[:max]
+      errors << AttrValidator::I18n.t('errors.can_not_be_more_than', length: options[:max]) if object.length > options[:max]
     end
     if options[:equal_to]
-      errors << AttrValidator::I18n.t("should be equal to #{options[:equal_to]}") if object.length != options[:equal_to]
+      errors << AttrValidator::I18n.t('errors.should_be_equal_to', length: options[:equal_to]) if object.length != options[:equal_to]
     end
     if options[:not_equal_to]
-      errors << AttrValidator::I18n.t("shouldn't be equal to #{options[:not_equal_to]}") if object.length == options[:not_equal_to]
+      errors << AttrValidator::I18n.t('errors.should_not_be_equal_to', length: options[:not_equal_to]) if object.length == options[:not_equal_to]
     end
 
     errors

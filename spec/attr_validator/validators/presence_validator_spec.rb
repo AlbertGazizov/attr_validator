@@ -10,7 +10,7 @@ describe AttrValidator::Validators::PresenceValidator do
 
     it "should return errors if text is not specified" do
       errors = AttrValidator::Validators::PresenceValidator.validate(" ", true)
-      errors.should == ["can't be blank"]
+      errors.should == ["can not be blank"]
     end
   end
 

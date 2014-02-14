@@ -10,9 +10,9 @@ class AttrValidator::Validators::UrlValidator
 
     errors = []
     if url_flag
-      errors << AttrValidator::I18n.t("invalid url") unless !!URL_REGEXP.match(value)
+      errors << AttrValidator::I18n.t('errors.invalid_url') unless !!URL_REGEXP.match(value)
     else
-      errors << AttrValidator::I18n.t("can't be a url") if !!URL_REGEXP.match(value)
+      errors << AttrValidator::I18n.t('errors.can_not_be_url') if !!URL_REGEXP.match(value)
     end
 
     errors

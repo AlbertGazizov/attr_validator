@@ -10,7 +10,7 @@ describe AttrValidator::Validators::RegexpValidator do
 
     it "should return errors if value is invalid" do
       errors = AttrValidator::Validators::RegexpValidator.validate('asdf', /#\w{3,6}/)
-      errors.should == ["doens't match defined format"]
+      errors.should == ["does not match defined format"]
     end
   end
 

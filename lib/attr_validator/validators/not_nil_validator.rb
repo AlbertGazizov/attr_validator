@@ -8,11 +8,11 @@ class AttrValidator::Validators::NotNilValidator
     errors = []
     if presence
       if value.nil?
-        errors << AttrValidator::I18n.t("can't be nil")
+        errors << AttrValidator::I18n.t('errors.can_not_be_nil')
       end
     else
       if value
-        errors << AttrValidator::I18n.t("can't be not nil")
+        errors << AttrValidator::I18n.t('errors.should_be_nil')
       end
     end
     errors

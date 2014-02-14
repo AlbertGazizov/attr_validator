@@ -34,9 +34,9 @@ class AttrValidator::Validators::EmailValidator
 
     errors = []
     if email_flag
-      errors << AttrValidator::I18n.t("invalid email") unless !!EMAIL_ADDRESS.match(value)
+      errors << AttrValidator::I18n.t("errors.invalid_email") unless !!EMAIL_ADDRESS.match(value)
     else
-      errors << AttrValidator::I18n.t("can't be email") if !!EMAIL_ADDRESS.match(value)
+      errors << AttrValidator::I18n.t("errors.can_not_be_email") if !!EMAIL_ADDRESS.match(value)
     end
     errors
   end

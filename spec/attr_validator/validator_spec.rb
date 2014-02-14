@@ -85,18 +85,18 @@ describe AttrValidator::Validator do
 
       errors = ContactValidator.new.validate(contact)
       errors.to_hash.should == {
-        first_name: ["can't be blank"],
+        first_name: ["can not be blank"],
         last_name: ["should be equal to 5"],
         age: ["should be greater than 0"],
         type: ["should be less than or equal to 5"],
         email: ["invalid email"],
-        color: ["doens't match defined format"],
+        color: ["does not match defined format"],
         status: ["should be included in [:new, :lead]"],
-        stage: ["shouldn't be included in [:wrong, :bad]"],
+        stage: ["should not be included in [:wrong, :bad]"],
         description: ["can't be empty"],
         companies_errors: [
-          { name: ["can't be more than 9"] },
-          { name: ["can't be less than 3"] },
+          { name: ["can not be more than 9"] },
+          { name: ["can not be less than 3"] },
         ]
       }
     end

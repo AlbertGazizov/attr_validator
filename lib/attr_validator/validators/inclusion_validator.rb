@@ -9,7 +9,7 @@ class AttrValidator::Validators::InclusionValidator
     errors = []
     if options[:in]
       unless options[:in].include?(value)
-        errors << (options[:message] || AttrValidator::I18n.t("should be included in #{options[:in]}"))
+        errors << (options[:message] || AttrValidator::I18n.t('errors.should_be_included_in_list', list: options[:in]))
       end
     end
     errors

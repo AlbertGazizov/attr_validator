@@ -10,12 +10,12 @@ describe AttrValidator::Validators::LengthValidator do
 
     it "should return errors if value has invalid max length" do
       errors = AttrValidator::Validators::LengthValidator.validate('long title', max: 5)
-      errors.should == ["can't be more than 5"]
+      errors.should == ["can not be more than 5"]
     end
 
     it "should return errors if value has invalid min length" do
       errors = AttrValidator::Validators::LengthValidator.validate('ya', min: 3)
-      errors.should == ["can't be less than 3"]
+      errors.should == ["can not be less than 3"]
     end
 
     it "should return errors if value has invalid equal_to length" do
@@ -25,7 +25,7 @@ describe AttrValidator::Validators::LengthValidator do
 
     it "should return errors if value has invalid not_equal_to length" do
       errors = AttrValidator::Validators::LengthValidator.validate('yad', not_equal_to: 3)
-      errors.should == ["shouldn't be equal to 3"]
+      errors.should == ["should not be equal to 3"]
     end
   end
 

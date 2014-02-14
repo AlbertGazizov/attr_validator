@@ -28,6 +28,5 @@ Or install it yourself as:
 5. Create new Pull Request
 
 # TODO
-1. Use I18n for messages
 2. Document methods
 3. Write doc in readme

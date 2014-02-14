@@ -9,11 +9,11 @@ class AttrValidator::Validators::PresenceValidator
     errors = []
     if presence
       if value.nil? || (value.is_a?(String) && value.strip.length == 0)
-        errors << AttrValidator::I18n.t("can't be blank")
+        errors << AttrValidator::I18n.t('errors.can_not_be_blank')
       end
     else
       if value
-        errors << AttrValidator::I18n.t("can't be not blank")
+        errors << AttrValidator::I18n.t('errors.should_be_blank')
       end
     end
     errors

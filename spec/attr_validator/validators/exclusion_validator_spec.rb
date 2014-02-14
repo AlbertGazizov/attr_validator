@@ -10,7 +10,7 @@ describe AttrValidator::Validators::ExclusionValidator do
 
     it "should return errors if value is invalid" do
       errors = AttrValidator::Validators::ExclusionValidator.validate(:new, in: [:new, :old, :medium])
-      errors.should == ["shouldn't be included in [:new, :old, :medium]"]
+      errors.should == ["should not be included in [:new, :old, :medium]"]
     end
   end
 

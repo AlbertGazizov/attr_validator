@@ -10,7 +10,7 @@ describe AttrValidator::Validators::NotNilValidator do
 
     it "should return errors if object is nil" do
       errors = AttrValidator::Validators::NotNilValidator.validate(nil, true)
-      errors.should == ["can't be nil"]
+      errors.should == ["can not be nil"]
     end
   end
 

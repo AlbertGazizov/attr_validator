@@ -9,7 +9,7 @@ class AttrValidator::Validators::RegexpValidator
 
     errors = []
     unless !!regexp.match(value)
-      errors << AttrValidator::I18n.t("doens't match defined format")
+      errors << AttrValidator::I18n.t('errors.does_not_match')
     end
     errors
   end

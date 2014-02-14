@@ -1,3 +1,4 @@
+require 'i18n'
 require 'attr_validator/core_extensions/class_attribute'
 require 'attr_validator/concern'
 require 'attr_validator/version'
@@ -34,3 +35,7 @@ AttrValidator.add_validator(:not_blank,    AttrValidator::Validators::PresenceVa
 AttrValidator.add_validator(:not_nil,      AttrValidator::Validators::NotNilValidator)
 AttrValidator.add_validator(:regexp,       AttrValidator::Validators::RegexpValidator)
 AttrValidator.add_validator(:url,          AttrValidator::Validators::UrlValidator)
+
+# I18n settings
+I18n.load_path = Dir['lib/attr_validator/locales/*.yml']
+I18n.default_locale = :en

@@ -9,22 +9,22 @@ class AttrValidator::Validators::NumericalityValidator
 
     errors = []
     if options[:greater_than]
-      errors << AttrValidator::I18n.t("should be greater than #{options[:greater_than]}") if number <= options[:greater_than]
+      errors << AttrValidator::I18n.t('errors.should_be_greater_than', number: options[:greater_than]) if number <= options[:greater_than]
     end
     if options[:greater_than_or_equal_to]
-      errors << AttrValidator::I18n.t("should be greater than or equal to #{options[:greater_than_or_equal_to]}") if number < options[:greater_than_or_equal_to]
+      errors << AttrValidator::I18n.t('errors.should_be_greater_than_or_equal_to', number: options[:greater_than_or_equal_to]) if number < options[:greater_than_or_equal_to]
     end
     if options[:less_than]
-      errors << AttrValidator::I18n.t("should be less than #{options[:less_than]}") if number >= options[:less_than]
+      errors << AttrValidator::I18n.t('errors.should_be_less_than', number: options[:less_than]) if number >= options[:less_than]
     end
     if options[:less_than_or_equal_to]
-      errors << AttrValidator::I18n.t("should be less than or equal to #{options[:less_than_or_equal_to]}") if number > options[:less_than_or_equal_to]
+      errors << AttrValidator::I18n.t('errors.should_be_less_than_or_equal_to', number: options[:less_than_or_equal_to]) if number > options[:less_than_or_equal_to]
     end
     if options[:even]
-      errors << AttrValidator::I18n.t("should be even number") unless number.even?
+      errors << AttrValidator::I18n.t('errors.should_be_even') unless number.even?
     end
     if options[:odd]
-      errors << AttrValidator::I18n.t("should be odd number") unless number.odd?
+      errors << AttrValidator::I18n.t('errors.should_be_odd') unless number.odd?
     end
     errors
   end
