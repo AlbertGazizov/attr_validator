@@ -42,9 +42,56 @@ Instantiate the validator and pass a contact object inside:
 ```ruby
 errors = ContactValidator.new.validate(contact)
 ```
-errors is an object which contains all validation errors
-if object is valid then errors.empty? will be true
-if object is invalid then errors.to_hash will return all validation errors
+errors is a hash which contains all validation errors
+if object is valid then errors will be empty
+
+### Adding own validators
+AttrValidator can be extended by adding your own validators.
+To add a validator define a class with two the class method validate and validate_options:
+The following example demonstrates the built in inclusion validator,
+it validates that specified value is one of the defined value
+```ruby
+class AttrValidator::Validators::InclusionValidator
+
+  # Validates that given value inscluded in the specified list
+  # @param value [Object] object to validate
+  # @parm options [Hash] validation options, e.g. { in: [:small, :medium, :large], message: "not included in the list of allowed items" }
+  #                      where :in - list of allowed values,
+  #                      message - is a message to return if value is not included in the list
+  # @return [Array] empty array if object is valid, list of errors otherwise
+  def self.validate(value, options)
+    return [] if value.nil?
+
+    errors = []
+    if options[:in]
+      unless options[:in].include?(value)
+        errors << (options[:message] || AttrValidator::I18n.t('errors.should_be_included_in_list', list: options[:in]))
+      end
+    end
+    errors
+  end
+
+  # Validates that options specified in
+  # :inclusion are valid
+  def self.validate_options(options)
+    raise ArgumentError, "validation options should be a Hash" unless options.is_a?(Hash)
+    raise ArgumentError, "validation options should have :in option and it should be an array of allowed values" unless options[:in].is_a?(Array)
+  end
+
+end
+```
+And register it in AttrValidator:
+```ruby
+AttrValidator.add_validator(:inclusion,    AttrValidator::Validators::InclusionValidator)
+```
+Now you can use it:
+```ruby
+class SomeValidator
+  include AttrValidator::Validator
+
+  validates :size, inclusion: { in: [:small, :medium, :large] }
+end
+```
 
 ## Installation
 
