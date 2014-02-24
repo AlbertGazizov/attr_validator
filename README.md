@@ -116,5 +116,4 @@ Or install it yourself as:
 5. Create new Pull Request
 
 # TODO
-2. Document methods
-3. Write doc in readme
+1. Document methods
