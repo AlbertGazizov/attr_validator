@@ -42,7 +42,7 @@ Instantiate the validator and pass a contact object inside:
 ```ruby
 errors = ContactValidator.new.validate(contact)
 ```
-errors is and object which contains all validation errors
+errors is an object which contains all validation errors
 if object is valid then errors.empty? will be true
 if object is invalid then errors.to_hash will return all validation errors
 

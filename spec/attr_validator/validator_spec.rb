@@ -84,7 +84,7 @@ describe AttrValidator::Validator do
       contact.companies = [company1, company2]
 
       errors = ContactValidator.new.validate(contact)
-      errors.to_hash.should == {
+      errors.should == {
         first_name: ["can not be blank"],
         last_name: ["should be equal to 5"],
         age: ["should be greater than 0"],

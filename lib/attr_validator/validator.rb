@@ -80,7 +80,7 @@ module AttrValidator::Validator
         custom_validation.call(entity, errors)
       end
     end
-    errors
+    errors.to_hash
   end
 
   def validate!(entity)
