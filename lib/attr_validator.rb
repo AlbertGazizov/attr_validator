@@ -37,5 +37,5 @@ AttrValidator.add_validator(:regexp,       AttrValidator::Validators::RegexpVali
 AttrValidator.add_validator(:url,          AttrValidator::Validators::UrlValidator)
 
 # I18n settings
-I18n.load_path = Dir[File.dirname(__FILE__) +'/attr_validator/locales/*.yml']
+I18n.load_path += Dir[File.dirname(__FILE__) +'/attr_validator/locales/*.yml']
 I18n.default_locale = :en
