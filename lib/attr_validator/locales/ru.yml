@@ -6,7 +6,7 @@ ru:
       should_not_be_included_in_list: "не должен быть включен в список %{list}"
       should_be_included_in_list: "должен быть включен в список %{list}"
       can_not_be_less_than: "не может быть меньше чем %{length}"
-      can_not_be_more_than: "не может быть болше чем %{length}"
+      can_not_be_more_than: "не может быть больше чем %{length}"
       should_be_equal_to: "должен быть равен %{length}"
       should_not_be_equal_to: "не должен быть равен %{length}"
       can_not_be_nil: "не может быть пустым"
