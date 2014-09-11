@@ -39,3 +39,4 @@ AttrValidator.add_validator(:url,          AttrValidator::Validators::UrlValidat
 # I18n settings
 I18n.load_path += Dir[File.dirname(__FILE__) +'/attr_validator/locales/*.yml']
 I18n.default_locale = :en
+I18n.reload!
