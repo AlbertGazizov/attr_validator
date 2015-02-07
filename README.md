@@ -115,5 +115,8 @@ Or install it yourself as:
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-# TODO
+## TODO
 1. Document methods
+
+## Author
+Albert Gazizov, [@deeper4k](https://twitter.com/deeper4k)
