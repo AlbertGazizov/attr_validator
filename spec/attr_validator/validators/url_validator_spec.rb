@@ -4,7 +4,7 @@ require 'attr_validator'
 describe AttrValidator::Validators::UrlValidator do
   describe ".validate" do
     it "should return empty errors if email is valid" do
-      errors = AttrValidator::Validators::UrlValidator.validate('example.com', true)
+      errors = AttrValidator::Validators::UrlValidator.validate('example-asdf.com', true)
       errors.should be_empty
     end
 

@@ -1,5 +1,5 @@
 class AttrValidator::Validators::UrlValidator
-  URL_REGEXP = /^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/
+  URL_REGEXP = /^(https?:\/\/)?([\w\.-]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/
 
   # Validates that string is a valid url
   # @param value [String] string to validate
